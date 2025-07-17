@@ -16,7 +16,7 @@ const Features = () => {
         'Riwayat konsultasi tersimpan',
         'Rekomendasi treatment yang tepat'
       ],
-      image: 'https://images.pexels.com/photos/6235086/pexels-photo-6235086.jpeg?auto=compress&cs=tinysrgb&w=600',
+      image: 'https://images.pexels.com/photos/4225920/pexels-photo-4225920.jpeg',
       color: 'cyan'
     },
     {
@@ -32,7 +32,7 @@ const Features = () => {
         'Produk perawatan lengkap',
         'Pengiriman cepat ke seluruh Indonesia'
       ],
-      image: 'https://images.pexels.com/photos/1619690/pexels-photo-1619690.jpeg?auto=compress&cs=tinysrgb&w=600',
+      image: 'https://images.pexels.com/photos/6214470/pexels-photo-6214470.jpeg',
       color: 'blue'
     },
     {
@@ -48,7 +48,7 @@ const Features = () => {
         'Dokter hewan berpengalaman',
         'Peralatan medis lengkap'
       ],
-      image: 'https://images.pexels.com/photos/4498221/pexels-photo-4498221.jpeg?auto=compress&cs=tinysrgb&w=600',
+      image: 'https://images.pexels.com/photos/6234610/pexels-photo-6234610.jpeg',
       color: 'orange'
     }
   ];

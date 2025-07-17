@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Menu,
   X,
-  Heart,
   ShoppingBag,
   ShoppingCart,
   User,
@@ -157,14 +156,14 @@ const Header = () => {
                       <User className="h-4 w-4" />
                       <span>Profil Saya</span>
                     </Link>
-                    <Link
+                    {/* <Link
                       to="/booking-history"
                       className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <ShoppingBag className="h-4 w-4" />
                       <span>Riwayat Booking</span>
-                    </Link>
+                    </Link> */}
                     <button
                       onClick={handleLogout}
                       className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors w-full text-left"

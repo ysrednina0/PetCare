@@ -27,6 +27,30 @@ export interface User {
   createdAt: Date
 }
 
+export interface ChatMessage {
+  id: string
+  sender: "user" | "doctor"
+  message: string
+  timestamp: Date
+  type: "text" | "image" | "system"
+}
+
+export interface ConsultationHistory {
+  id: string
+  consultationId: string
+  date: Date
+  petName: string
+  petId: string
+  doctorName: string
+  doctorImage?: string
+  consultationType: "general" | "emergency" | "follow-up" | "specialist"
+  status: "completed" | "ongoing" | "cancelled"
+  duration?: number // in minutes
+  chatMessages: ChatMessage[]
+  price: number
+  notes?: string
+}
+
 export interface BookingHistory {
   id: string
   serviceType: "consultation" | "home-service"
@@ -39,6 +63,23 @@ export interface BookingHistory {
   status: "completed" | "upcoming" | "cancelled"
   price: number
   notes?: string
+}
+
+export interface HomeServiceHistory {
+  id: string
+  bookingId: string
+  date: Date
+  time: string
+  petName: string
+  petId: string
+  serviceType: "health-checkup" | "grooming" | "vaccination" | "emergency-service" | "dental-care"
+  serviceName: string
+  doctorName?: string
+  status: "completed" | "upcoming" | "cancelled" | "ongoing"
+  price: number
+  address: string
+  notes?: string
+  completedAt?: Date
 }
 
 export interface OrderItem {
@@ -64,6 +105,8 @@ interface UserContextType {
   user: User | null
   isLoggedIn: boolean
   bookingHistory: BookingHistory[]
+  consultationHistory: ConsultationHistory[]
+  homeServiceHistory: HomeServiceHistory[]
   login: (email: string, password: string) => boolean
   logout: () => void
   updateProfile: (userData: Partial<User>) => void
@@ -71,6 +114,10 @@ interface UserContextType {
   updatePet: (petId: string, petData: Partial<Pet>) => void
   deletePet: (petId: string) => void
   addBooking: (booking: Omit<BookingHistory, "id">) => void
+  addConsultationHistory: (consultation: Omit<ConsultationHistory, "id">) => void
+  updateConsultationHistory: (consultationId: string, updates: Partial<ConsultationHistory>) => void
+  addHomeServiceHistory: (service: Omit<HomeServiceHistory, "id">) => void
+  updateHomeServiceHistory: (serviceId: string, updates: Partial<HomeServiceHistory>) => void
   orders: Order[]
   addOrder: (order: Omit<Order, "id" | "orderNumber">) => void
 }
@@ -88,11 +135,11 @@ export const useUser = () => {
 // Demo user data
 const DEMO_USER: User = {
   id: "demo-user-1",
-  name: "Sarah Wijaya",
-  email: "demo@example.com",
+  name: "Komeng",
+  email: "AkunKomeng@gmail.com",
   phone: "+62 812-3456-7890",
   address: "Jl. Sudirman No. 123, Jakarta Selatan",
-  avatar: "https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=300",
+  avatar: "https://plus.unsplash.com/premium_photo-1738590017220-5820f49608cc?q=80&w=1934&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   pets: [
     {
       id: "pet-1",
@@ -162,16 +209,81 @@ const DEMO_BOOKINGS: BookingHistory[] = [
   },
 ]
 
+// Demo consultation history
+const DEMO_CONSULTATIONS: ConsultationHistory[] = [
+  {
+    id: "consultation-1",
+    consultationId: "cons-001",
+    date: new Date("2024-01-10"),
+    petName: "Milo",
+    petId: "pet-1",
+    doctorName: "Dr. Sarah Wijaya",
+    doctorImage: "https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=300",
+    consultationType: "general",
+    status: "completed",
+    duration: 25,
+    price: 75000,
+    notes: "Konsultasi rutin mengenai kesehatan umum",
+    chatMessages: [
+      {
+        id: "msg-1",
+        sender: "system",
+        message: "Konsultasi dimulai dengan Dr. Sarah Wijaya untuk Milo",
+        timestamp: new Date("2024-01-10T14:00:00"),
+        type: "system",
+      },
+      {
+        id: "msg-2",
+        sender: "doctor",
+        message: "Halo! Saya Dr. Sarah. Apa yang bisa saya bantu dengan Milo hari ini?",
+        timestamp: new Date("2024-01-10T14:00:30"),
+        type: "text",
+      },
+      {
+        id: "msg-3",
+        sender: "user",
+        message: "Halo dokter, Milo sepertinya kurang nafsu makan belakangan ini.",
+        timestamp: new Date("2024-01-10T14:01:00"),
+        type: "text",
+      },
+    ],
+  },
+]
+
+// Demo home service history
+const DEMO_HOME_SERVICES: HomeServiceHistory[] = [
+  {
+    id: "service-1",
+    bookingId: "booking-hs-001",
+    date: new Date("2024-01-15"),
+    time: "10:00",
+    petName: "Luna",
+    petId: "pet-2",
+    serviceType: "vaccination",
+    serviceName: "Vaksinasi Lengkap",
+    doctorName: "Dr. Ahmad Pratama",
+    status: "completed",
+    price: 200000,
+    address: "Jl. Sudirman No. 123, Jakarta Selatan",
+    notes: "Vaksin rabies dan distemper berhasil diberikan",
+    completedAt: new Date("2024-01-15T11:30:00"),
+  },
+]
+
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [bookingHistory, setBookingHistory] = useState<BookingHistory[]>([])
+  const [consultationHistory, setConsultationHistory] = useState<ConsultationHistory[]>([])
+  const [homeServiceHistory, setHomeServiceHistory] = useState<HomeServiceHistory[]>([])
   const [orders, setOrders] = useState<Order[]>([])
 
   // Load user data from localStorage on component mount
   useEffect(() => {
     const savedUser = localStorage.getItem("petcare_user")
     const savedBookings = localStorage.getItem("petcare_bookings")
+    const savedConsultations = localStorage.getItem("petcare_consultations")
+    const savedHomeServices = localStorage.getItem("petcare_home_services")
     const savedOrders = localStorage.getItem("petcare_orders")
 
     if (savedUser) {
@@ -186,12 +298,24 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setBookingHistory(DEMO_BOOKINGS)
     }
 
+    if (savedConsultations) {
+      setConsultationHistory(JSON.parse(savedConsultations))
+    } else {
+      setConsultationHistory(DEMO_CONSULTATIONS)
+    }
+
+    if (savedHomeServices) {
+      setHomeServiceHistory(JSON.parse(savedHomeServices))
+    } else {
+      setHomeServiceHistory(DEMO_HOME_SERVICES)
+    }
+
     if (savedOrders) {
       setOrders(JSON.parse(savedOrders))
     }
   }, [])
 
-  // Save user data to localStorage whenever user changes
+  // Save data to localStorage whenever they change
   useEffect(() => {
     if (user) {
       localStorage.setItem("petcare_user", JSON.stringify(user))
@@ -200,19 +324,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [user])
 
-  // Save booking history to localStorage
   useEffect(() => {
     localStorage.setItem("petcare_bookings", JSON.stringify(bookingHistory))
   }, [bookingHistory])
 
-  // Save orders to localStorage
+  useEffect(() => {
+    localStorage.setItem("petcare_consultations", JSON.stringify(consultationHistory))
+  }, [consultationHistory])
+
+  useEffect(() => {
+    localStorage.setItem("petcare_home_services", JSON.stringify(homeServiceHistory))
+  }, [homeServiceHistory])
+
   useEffect(() => {
     localStorage.setItem("petcare_orders", JSON.stringify(orders))
   }, [orders])
 
   const login = (email: string, password: string): boolean => {
     // Demo login - check for demo credentials
-    if (email === "demo@example.com" && password === "123456") {
+    if (email === "AkunKomeng@gmail.com" && password === "123456") {
       setUser(DEMO_USER)
       setIsLoggedIn(true)
       return true
@@ -281,6 +411,38 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setBookingHistory((prev) => [newBooking, ...prev])
   }
 
+  const addConsultationHistory = (consultation: Omit<ConsultationHistory, "id">) => {
+    const newConsultation: ConsultationHistory = {
+      ...consultation,
+      id: `consultation-${Date.now()}`,
+    }
+
+    setConsultationHistory((prev) => [newConsultation, ...prev])
+  }
+
+  const updateConsultationHistory = (consultationId: string, updates: Partial<ConsultationHistory>) => {
+    setConsultationHistory((prev) =>
+      prev.map((consultation) =>
+        consultation.consultationId === consultationId ? { ...consultation, ...updates } : consultation,
+      ),
+    )
+  }
+
+  const addHomeServiceHistory = (service: Omit<HomeServiceHistory, "id">) => {
+    const newService: HomeServiceHistory = {
+      ...service,
+      id: `service-${Date.now()}`,
+    }
+
+    setHomeServiceHistory((prev) => [newService, ...prev])
+  }
+
+  const updateHomeServiceHistory = (serviceId: string, updates: Partial<HomeServiceHistory>) => {
+    setHomeServiceHistory((prev) =>
+      prev.map((service) => (service.id === serviceId ? { ...service, ...updates } : service)),
+    )
+  }
+
   const addOrder = (orderData: Omit<Order, "id" | "orderNumber">) => {
     const newOrder: Order = {
       ...orderData,
@@ -294,6 +456,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     user,
     isLoggedIn,
     bookingHistory,
+    consultationHistory,
+    homeServiceHistory,
     login,
     logout,
     updateProfile,
@@ -301,6 +465,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     updatePet,
     deletePet,
     addBooking,
+    addConsultationHistory,
+    updateConsultationHistory,
+    addHomeServiceHistory,
+    updateHomeServiceHistory,
     orders,
     addOrder,
   }

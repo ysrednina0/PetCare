@@ -101,7 +101,7 @@ const About = () => {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-gray-50">
+      {/* <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -120,7 +120,7 @@ const About = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values */}
       <section className="py-16">
@@ -148,7 +148,7 @@ const About = () => {
       </section>
 
       {/* Team */}
-      <section className="py-16 bg-gray-50">
+      {/* <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -173,7 +173,7 @@ const About = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Story */}
       <section className="py-16">
@@ -183,8 +183,8 @@ const About = () => {
               Cerita Kami
             </h2>
           </div>
-          <div className="prose prose-lg mx-auto text-gray-600">
-            <p className="mb-6">
+          <div className="text-center prose prose-lg mx-auto text-gray-600">
+            <p className="mb-6 ">
               PetCare lahir dari keprihatinan mendalam terhadap berbagai tantangan yang dihadapi 
               pemilik hewan peliharaan di Indonesia. Kami melihat bagaimana akses terbatas ke dokter hewan, 
               terutama di daerah terpencil atau di luar jam operasional standar, sering kali menjadi 

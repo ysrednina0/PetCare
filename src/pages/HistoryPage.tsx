@@ -1,17 +1,26 @@
 "use client"
 
 import * as React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { MessageCircle, Home, ShoppingBag } from "lucide-react"
 import { useUser } from "../contexts/UserContext"
-import { useNavigate } from "react-router-dom"
-import BookingHistory from "./BookingHistory"
+import { useNavigate, useLocation } from "react-router-dom"
+import ConsultationHistoryPage from "./ConsultationHistoryPage"
+import HomeServiceHistoryPage from "./HomeServiceHistoryPage"
 import ProductCheckoutHistory from "./ProductCheckoutHistory"
 
 const HistoryPage = () => {
   const { isLoggedIn } = useUser()
   const navigate = useNavigate()
+  const location = useLocation()
   const [activeTab, setActiveTab] = useState<"consultations" | "home-service" | "product-checkout">("consultations")
+
+  // Check for initial tab from navigation state
+  useEffect(() => {
+    if (location.state?.activeTab) {
+      setActiveTab(location.state.activeTab)
+    }
+  }, [location.state])
 
   // Redirect if not logged in
   if (!isLoggedIn) {
@@ -96,13 +105,13 @@ const HistoryPage = () => {
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           {activeTab === "consultations" && (
             <div className="p-6">
-              <BookingHistory filterType="consultation" />
+              <ConsultationHistoryPage />
             </div>
           )}
 
           {activeTab === "home-service" && (
             <div className="p-6">
-              <BookingHistory filterType="home-service" />
+              <HomeServiceHistoryPage />
             </div>
           )}
 

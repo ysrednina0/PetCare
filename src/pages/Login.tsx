@@ -11,7 +11,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [formData, setFormData] = useState({
-    email: "demo@example.com", // Pre-filled demo email
+    email: "AkunKomeng@gmail.com", // Pre-filled demo email
     password: "123456", // Pre-filled demo password
   })
 
@@ -34,7 +34,7 @@ const Login = () => {
       if (success) {
         navigate("/")
       } else {
-        setError("Email atau password salah. Gunakan demo@example.com dan 123456 untuk demo.")
+        setError("Email atau password salah. Gunakan AkunKomeng@gmail.com dan 123456 untuk demo.")
       }
 
       setIsLoading(false)
@@ -53,12 +53,12 @@ const Login = () => {
   // Quick demo login function
   const handleDemoLogin = () => {
     setFormData({
-      email: "demo@example.com",
+      email: "AkunKomeng@gmail.com",
       password: "123456",
     })
     // Auto-submit after setting demo credentials
     setTimeout(() => {
-      const success = login("demo@example.com", "123456")
+      const success = login("AkunKomeng@gmail.com", "123456")
       if (success) {
         navigate("/")
       }
@@ -86,7 +86,7 @@ const Login = () => {
             <div>
               <h3 className="text-sm font-medium text-blue-800">Demo Account</h3>
               <p className="text-sm text-blue-600">
-                Email: demo@example.com
+                Email: AkunKomeng@gmail.com
                 <br />
                 Password: 123456
               </p>

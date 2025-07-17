@@ -3,6 +3,13 @@
 import { useState } from "react"
 import { Search, ShoppingCart, Star, Heart, Check } from "lucide-react"
 import { useCart } from "../contexts/CartContext"
+import royalCaninImg from "../assets/gambar1.jpeg"
+import vitaminImg from "../assets/gambar2.jpeg"
+import kalungImg from "../assets/gambar3.jpeg"
+import mainanImg from "../assets/gambar4.jpeg"
+import shampooImg from "../assets/gambar5.jpg"
+import whiskasImg from "../assets/gambar6.jpg"
+
 
 const Store = () => {
   const [selectedCategory, setSelectedCategory] = useState("all")
@@ -28,8 +35,7 @@ const Store = () => {
       originalPrice: "Rp 320.000",
       rating: 4.8,
       reviews: 124,
-      image: "https://images.pexels.com/photos/1359307/pexels-photo-1359307.jpeg?auto=compress&cs=tinysrgb&w=400",
-      discount: "11%",
+      image: royalCaninImg,
       inStock: true,
     },
     {
@@ -40,7 +46,7 @@ const Store = () => {
       originalPrice: "Rp 55.000",
       rating: 4.6,
       reviews: 89,
-      image: "https://images.pexels.com/photos/6131071/pexels-photo-6131071.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: vitaminImg,
       discount: "18%",
       inStock: true,
     },
@@ -52,7 +58,7 @@ const Store = () => {
       originalPrice: null,
       rating: 4.9,
       reviews: 67,
-      image: "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: kalungImg,
       discount: null,
       inStock: true,
     },
@@ -64,7 +70,7 @@ const Store = () => {
       originalPrice: "Rp 45.000",
       rating: 4.7,
       reviews: 156,
-      image: "https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: mainanImg,
       discount: "22%",
       inStock: false,
     },
@@ -76,7 +82,7 @@ const Store = () => {
       originalPrice: null,
       rating: 4.5,
       reviews: 93,
-      image: "https://images.pexels.com/photos/6568946/pexels-photo-6568946.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: shampooImg,
       discount: null,
       inStock: true,
     },
@@ -88,7 +94,7 @@ const Store = () => {
       originalPrice: "Rp 110.000",
       rating: 4.4,
       reviews: 201,
-      image: "https://images.pexels.com/photos/1359307/pexels-photo-1359307.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: whiskasImg,
       discount: "14%",
       inStock: true,
     },

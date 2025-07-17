@@ -1,6 +1,7 @@
 import React from 'react';
-import { Heart, Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
 import logo from "../assets/logo-petcare-white.svg";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -20,11 +21,11 @@ const Footer = () => {
               toko produk hewan, dan layanan home service untuk memberikan perawatan terbaik bagi hewan peliharaan Anda.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors">
-                <Facebook className="h-5 w-5" />
+              <a href="https://www.instagram.com/petcaree.ofc?igsh=MXdtM25mNDF0cHZ2eg==" className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors">
+                <Instagram className="h-5 w-5" />
               </a>
               <a href="#" className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors">
-                <Instagram className="h-5 w-5" />
+                <Facebook className="h-5 w-5" />
               </a>
               <a href="#" className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors">
                 <Twitter className="h-5 w-5" />
@@ -36,11 +37,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-6">Layanan</h3>
             <ul className="space-y-4">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Konsultasi Online</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Toko Produk</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Home Service</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Vaksinasi</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Grooming</a></li>
+              <li><Link to="/Consultation" className="text-gray-400 hover:text-white transition-colors">Konsultasi Online</Link></li>
+              <li><Link to="/Store" className="text-gray-400 hover:text-white transition-colors">Toko Produk</Link></li>
+              <li><Link to="/Services" className="text-gray-400 hover:text-white transition-colors">Home Service</Link></li>
+              <li><Link to="/Services" className="text-gray-400 hover:text-white transition-colors">Vaksinasi</Link></li>
+              <li><Link to="/Services" className="text-gray-400 hover:text-white transition-colors">Grooming</Link></li>
             </ul>
           </div>
 
@@ -54,7 +55,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-cyan-500" />
-                <span className="text-gray-400">info@petcare.id</span>
+                <span className="text-gray-400">petcareeofc@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-cyan-500" />
