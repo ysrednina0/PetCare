@@ -1,14 +1,7 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import {
-  Menu,
-  X,
-  ShoppingBag,
-  ShoppingCart,
-  User,
-  LogOut,
-} from "lucide-react";
+import { Menu, X, ShoppingBag, ShoppingCart, User, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
 import { useUser } from "../contexts/UserContext";
@@ -91,16 +84,6 @@ const Header = () => {
               Layanan
             </Link>
             <Link
-              to="/about"
-              className={`transition-colors ${
-                isActive("/about")
-                  ? "text-cyan-600 font-medium"
-                  : "text-gray-700 hover:text-cyan-600"
-              }`}
-            >
-              Tentang
-            </Link>
-            <Link
               to="/history"
               className={`transition-colors ${
                 isActive("/history")
@@ -109,6 +92,16 @@ const Header = () => {
               }`}
             >
               Riwayat
+            </Link>
+            <Link
+              to="/about"
+              className={`transition-colors ${
+                isActive("/about")
+                  ? "text-cyan-600 font-medium"
+                  : "text-gray-700 hover:text-cyan-600"
+              }`}
+            >
+              Tentang
             </Link>
           </nav>
 
